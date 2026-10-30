@@ -1,0 +1,234 @@
+cff-version: "1.2.0"
+message: If you use this app, please cite it and the works it builds on, listed under references.
+type: software
+title: Spatial Domains (BANKSY)
+abstract: 'Finds spatial domains in spatial transcriptomics samples (Visium, Visium HD, Xenium, MERSCOPE,
+  CosMx) with BANKSY: expression augmented with the neighbourhood mean and an azimuthal Gabor filter term,
+  joint PCA, Harmony by sample and Leiden clustering, so domains are shared across samples. Writes domain
+  labels, marker genes, per-sample domain fractions, agreement with user annotations and figures.'
+authors:
+- name: Pennsieve (University of Pennsylvania)
+repository-code: https://github.com/pennsieve-apps/st-domains
+license: Apache-2.0
+keywords:
+- spatial-transcriptomics
+- transcriptomics
+- spatial-domains
+- clustering
+- banksy
+- visium
+- xenium
+references:
+- type: article
+  title: 'BANKSY unifies cell typing and tissue domain segmentation for scalable spatial omics data analysis'
+  authors:
+  - family-names: 'Singhal'
+    given-names: 'Vipul'
+  - family-names: 'Chou'
+    given-names: 'Nigel'
+  - family-names: 'Lee'
+    given-names: 'Joseph'
+  - family-names: 'Yue'
+    given-names: 'Yifei'
+  - family-names: 'Liu'
+    given-names: 'Jinyue'
+  - family-names: 'Chock'
+    given-names: 'Wan Kee'
+  - family-names: 'Lin'
+    given-names: 'Li'
+  - family-names: 'Chang'
+    given-names: 'Yun-Ching'
+  - family-names: 'Teo'
+    given-names: 'Erica Mei Ling'
+  - family-names: 'Aow'
+    given-names: 'Jonathan'
+  - family-names: 'Lee'
+    given-names: 'Hwee Kuan'
+  - family-names: 'Chen'
+    given-names: 'Kok Hao'
+  - family-names: 'Prabhakar'
+    given-names: 'Shyam'
+  year: 2024
+  journal: 'Nature Genetics'
+  volume: 56
+  issue: '3'
+  start: '431'
+  end: '441'
+  doi: 10.1038/s41588-024-01664-3
+  identifiers:
+  - type: other
+    value: 'pmid:38413725'
+    description: PubMed ID
+- type: article
+  title: 'SCANPY: large-scale single-cell gene expression data analysis'
+  authors:
+  - family-names: 'Wolf'
+    given-names: 'F. Alexander'
+  - family-names: 'Angerer'
+    given-names: 'Philipp'
+  - family-names: 'Theis'
+    given-names: 'Fabian J.'
+  year: 2018
+  journal: 'Genome Biology'
+  volume: 19
+  issue: '1'
+  start: '15'
+  doi: 10.1186/s13059-017-1382-0
+  identifiers:
+  - type: other
+    value: 'pmid:29409532'
+    description: PubMed ID
+- type: article
+  title: 'anndata: Access and store annotated data matrices'
+  authors:
+  - family-names: 'Virshup'
+    given-names: 'Isaac'
+  - family-names: 'Rybakov'
+    given-names: 'Sergei'
+  - family-names: 'Theis'
+    given-names: 'Fabian J.'
+  - family-names: 'Angerer'
+    given-names: 'Philipp'
+  - family-names: 'Wolf'
+    given-names: 'F. Alexander'
+  year: 2024
+  journal: 'Journal of Open Source Software'
+  volume: 9
+  issue: '101'
+  start: '4371'
+  doi: 10.21105/joss.04371
+- type: article
+  title: 'Fast, sensitive and accurate integration of single-cell data with Harmony'
+  authors:
+  - family-names: 'Korsunsky'
+    given-names: 'Ilya'
+  - family-names: 'Millard'
+    given-names: 'Nghia'
+  - family-names: 'Fan'
+    given-names: 'Jean'
+  - family-names: 'Slowikowski'
+    given-names: 'Kamil'
+  - family-names: 'Zhang'
+    given-names: 'Fan'
+  - family-names: 'Wei'
+    given-names: 'Kevin'
+  - family-names: 'Baglaenko'
+    given-names: 'Yuriy'
+  - family-names: 'Brenner'
+    given-names: 'Michael'
+  - family-names: 'Loh'
+    given-names: 'Po-ru'
+  - family-names: 'Raychaudhuri'
+    given-names: 'Soumya'
+  year: 2019
+  journal: 'Nature Methods'
+  volume: 16
+  issue: '12'
+  start: '1289'
+  end: '1296'
+  doi: 10.1038/s41592-019-0619-0
+  identifiers:
+  - type: other
+    value: 'pmid:31740819'
+    description: PubMed ID
+- type: article
+  title: 'From Louvain to Leiden: guaranteeing well-connected communities'
+  authors:
+  - family-names: 'Traag'
+    given-names: 'V. A.'
+  - family-names: 'Waltman'
+    given-names: 'L.'
+  - family-names: 'van Eck'
+    given-names: 'N. J.'
+  year: 2019
+  journal: 'Scientific Reports'
+  volume: 9
+  issue: '1'
+  start: '5233'
+  doi: 10.1038/s41598-019-41695-z
+  identifiers:
+  - type: other
+    value: 'pmid:30914743'
+    description: PubMed ID
+- type: article
+  title: 'UMAP: Uniform Manifold Approximation and Projection'
+  authors:
+  - family-names: 'McInnes'
+    given-names: 'Leland'
+  - family-names: 'Healy'
+    given-names: 'John'
+  - family-names: 'Saul'
+    given-names: 'Nathaniel'
+  - family-names: 'Großberger'
+    given-names: 'Lukas'
+  year: 2018
+  journal: 'Journal of Open Source Software'
+  volume: 3
+  issue: '29'
+  start: '861'
+  doi: 10.21105/joss.00861
+- type: article
+  title: 'Benchmarking spatial clustering methods with spatially resolved transcriptomics data'
+  authors:
+  - family-names: 'Yuan'
+    given-names: 'Zhiyuan'
+  - family-names: 'Zhao'
+    given-names: 'Fangyuan'
+  - family-names: 'Lin'
+    given-names: 'Senlin'
+  - family-names: 'Zhao'
+    given-names: 'Yu'
+  - family-names: 'Yao'
+    given-names: 'Jianhua'
+  - family-names: 'Cui'
+    given-names: 'Yan'
+  - family-names: 'Zhang'
+    given-names: 'Xiao-Yong'
+  - family-names: 'Zhao'
+    given-names: 'Yi'
+  year: 2024
+  journal: 'Nature Methods'
+  volume: 21
+  issue: '4'
+  start: '712'
+  end: '722'
+  doi: 10.1038/s41592-024-02215-8
+  identifiers:
+  - type: other
+    value: 'pmid:38491270'
+    description: PubMed ID
+- type: data
+  title: '10x Visium Spatial Transcriptomics Dataset: Kidney (3) and Lung (5) Cancer with Tertiary Lymphoid Structures'
+  authors:
+  - family-names: Dawo
+    given-names: Sebastian
+  - family-names: Nonchev
+    given-names: Kalin
+  - family-names: Silina
+    given-names: Karina
+  year: 2025
+  publisher:
+    name: Zenodo
+  doi: 10.5281/zenodo.14620362
+  license: CC-BY-4.0
+- type: software
+  title: 'pybanksy: BANKSY in Python'
+  authors:
+  - family-names: Chou
+    given-names: Nigel
+  - family-names: Yue
+    given-names: Yifei
+  - family-names: Singhal
+    given-names: Vipul
+  version: 1.3.5
+  license: GPL-3.0
+  repository-code: https://github.com/prabhakarlab/Banksy_py
+- type: software
+  title: harmonypy
+  authors:
+  - family-names: Slowikowski
+    given-names: Kamil
+  - family-names: Arevalo
+    given-names: John
+  version: 2.1.0
+  repository-code: https://github.com/slowkow/harmonypy

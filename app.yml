@@ -1,0 +1,161 @@
+# yaml-language-server: $schema=https://schemas.pennsieve.io/app-manifest/v1.json
+schemaVersion: "1.0"
+application:
+  name: Spatial Domains (BANKSY)
+  description: >-
+    Finds spatial domains (tissue regions with a shared expression profile and neighbourhood) in
+    spatial transcriptomics samples with BANKSY (Singhal et al. 2024), the step after st-qc in the
+    Spatial Domain Mapping & Condition Comparison workflow; works on Visium spots, Visium HD bins and
+    Xenium / MERSCOPE / CosMx cells. Each observation's expression is augmented with the weighted
+    mean expression of its K_GEOM nearest spatial neighbours and an azimuthal Gabor filter
+    (expression gradient) term, weighted by LAMBDA; the samples are then clustered jointly
+    on the genes common to all samples (PCA, Harmony by sample, Leiden), so domains D01, D02, ... are
+    shared across samples. Writes
+    labels.csv, Wilcoxon marker genes per domain, per-sample domain fractions, agreement (ARI, NMI,
+    confusion) with obs["annotation"] when present, and figures (domain maps on the H&E, UMAP,
+    marker dot plot). The image bundles pybanksy, harmonypy, leidenalg and igraph (GPL), so it is
+    distributed under the GPL.
+  type: processor
+  tags:
+    - spatial-transcriptomics
+    - transcriptomics
+    - genomics
+    - single-cell
+    - visium
+    - xenium
+    - merscope
+    - cosmx
+    - clustering
+    - spatial-domains
+    - banksy
+runtime:
+  cpu: 4096
+  # Measured: 27.5 k Visium spots 2.8 GB / 3.7 min, 200 k bins 3.8 GB / 6.3 min (amd64 image, emulated,
+  # 2 CPUs); 500 k bins 5.8 GB natively. 12 GB leaves 2x headroom for a 500 k-bin Visium HD sample.
+  memory: 12288
+  computeTypes:
+    - standard
+  timeoutSeconds: 14400
+parameters:
+  - name: LAMBDA
+    type: number
+    label: Neighbourhood weight (lambda)
+    description: >-
+      Weight of the spatial neighbourhood features against the observation's own expression (0 =
+      ordinary non-spatial clustering, 1 = neighbourhood only). 0.8 finds tissue domains (the
+      BANKSY authors' recommendation); 0.2 finds cell types / states that are spatially coherent.
+    defaultValue: 0.8
+    min: 0
+    max: 1
+  - name: K_GEOM
+    type: integer
+    label: Spatial neighbours
+    description: >-
+      Nearest spatial neighbours averaged into each observation's neighbourhood profile (the
+      gradient term uses 2 x K_GEOM). 15 covers about two rings of Visium spots.
+    defaultValue: 15
+    min: 1
+    max: 200
+  - name: N_PCS
+    type: integer
+    label: Principal components
+    description: Principal components of the BANKSY feature matrix used for the clustering graph.
+    defaultValue: 20
+    min: 2
+    max: 200
+  - name: RESOLUTION
+    type: number
+    label: Leiden resolution
+    description: >-
+      Leiden resolution (higher = more, smaller domains). Ignored when N_DOMAINS > 0. 0.2 gave 13
+      domains on 8 Visium sections (27 k spots), 9 of them present in several sections; 0.5 gave 29,
+      most in one section only.
+    defaultValue: 0.2
+    min: 0.01
+    max: 10
+  - name: N_DOMAINS
+    type: integer
+    label: Number of domains
+    description: >-
+      When > 0, the Leiden resolution is searched (bisection between 0.05 and 3, at most 12 runs)
+      for this many domains; the closest count found is used if it cannot be hit exactly.
+    defaultValue: 0
+    min: 0
+    max: 100
+  - name: INTEGRATION
+    type: string
+    label: Sample integration
+    description: >-
+      harmony: Harmony on the BANKSY principal components by sample_id before clustering, so the
+      same tissue region in different sections lands in one domain (only with more than one
+      sample). none: no correction (use when the samples share a batch, or to see sample effects).
+    defaultValue: harmony
+    validValues: [harmony, none]
+  - name: N_MARKERS
+    type: integer
+    label: Markers per domain
+    description: Top marker genes per domain (Wilcoxon rank-sum, domain vs the rest) in domain_markers.csv.
+    defaultValue: 25
+    min: 0
+    max: 500
+  - name: IGNORE_ANNOTATIONS
+    type: string
+    label: Annotations to ignore
+    description: >-
+      Comma-separated obs["annotation"] values left out of the agreement (ARI / NMI, confusion),
+      e.g. unannotated spots. Empty annotations are always left out.
+    defaultValue: Unassigned
+  - name: MAX_OBS_FOR_UMAP
+    type: integer
+    label: Observations in the UMAP
+    description: The UMAP figure uses a seeded subsample of at most this many observations; 0 = no UMAP.
+    defaultValue: 50000
+    min: 0
+  - name: SEED
+    type: integer
+    description: Seed for Harmony, the kNN graph, Leiden, UMAP and the subsamples.
+    defaultValue: 42
+  - name: THREADS
+    type: integer
+    label: Threads
+    description: BLAS / numba threads; 0 = from the container's CPU quota.
+    defaultValue: 0
+    min: 0
+    max: 64
+# Each input in its own folder (placement: subfolder) when linked; without links the files are
+# found by name anywhere under INPUT_DIR.
+inputs:
+  - name: spatial
+    description: >-
+      st-qc's <sample_id>.h5ad, one per sample: log-normalized X (CSR), var["highly_variable"],
+      obsm["spatial"], uns["pennsieve"], uns["spatial"] lowres image for Visium, optionally
+      obs["annotation"]. st-prep's raw-count files also work (normalized here).
+    formats:
+      - format_3590
+    mediaTypes:
+      - application/x-hdf5
+    placement: subfolder
+    required: true
+  - name: metadata
+    description: >-
+      st-prep's samples.csv (sample_id and any sample-sheet columns); without it every .h5ad is a
+      sample. prep.json is ignored.
+    mediaTypes:
+      - text/csv
+      - application/json
+    placement: subfolder
+    required: false
+outputs:
+  - name: labels
+    description: >-
+      labels.csv (sample_id, obs_id, domain), domain_markers.csv (domain, gene, logfoldchange,
+      pval_adj, pct_in, pct_out, rank), domain_summary.csv (sample_id, domain, n_obs, fraction),
+      agreement.csv (sample_id, ari, nmi, n_obs, n_classes, n_domains; per sample and "all"),
+      confusion.csv (sample_id, annotation, domain, n_obs), annotation_match.csv (best domain per
+      annotation class with precision / recall / F1) when obs["annotation"] exists,
+      figures/<sample_id>_domains.png, figures/umap.png, figures/markers_dotplot.png,
+      figures/confusion.png, figures/domain_composition.png, summary.json, provenance.json.
+    mediaTypes:
+      - text/csv
+      - image/png
+      - application/json
