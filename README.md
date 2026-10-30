@@ -102,8 +102,8 @@ on 10,971 spots (Normal 5,118, Tumor 4,442, TLS 885, Immune 493, Lymph_node 33);
 spots are left out of the agreement.
 
 With the defaults (`LAMBDA=0.8`, `RESOLUTION=0.2`, Harmony) the image found **14 domains, 9 of them
-present (≥ 20 spots) in at least 2 sections**, 7 in all eight; the other 5 are small (468 spots or
-fewer) and confined to one section. Pooled **ARI 0.18, NMI 0.29**; per section ARI 0.04 (KC2) to
+present (≥ 20 spots) in at least 2 sections** (6 in all eight, 2 in seven); the other 5 are small
+(468 spots or fewer) and reach 20 spots in at most one section. Pooled **ARI 0.18, NMI 0.29**; per section ARI 0.04 (KC2) to
 0.65 (LC2), median ≈ 0.29. Best matches: TLS → D03 (recall 0.76, precision 0.41; markers LTB, CD37,
 CORO1A, IGHG2: a lymphoid domain that also holds lymphocyte-rich spots the pathologist did not call
 TLS), Tumor → D04 (precision 0.90, recall 0.41), Normal → D01 (precision 0.91, recall 0.32; SFTPB,
