@@ -1,5 +1,6 @@
 cff-version: "1.2.0"
-message: If you use this app, please cite it and the works it builds on, listed under references.
+message: >-
+  If you use this app, please cite the work it implements (preferred-citation), this release, and Pennsieve (RRID:SCR_021677); the other works it builds on are listed under references.
 type: software
 title: Spatial Domains (BANKSY)
 abstract: 'Finds spatial domains in spatial transcriptomics samples (Visium, Visium HD, Xenium, MERSCOPE,
@@ -18,6 +19,48 @@ keywords:
 - banksy
 - visium
 - xenium
+# The work this app implements; the release report's "How to cite" puts it first.
+preferred-citation:
+  type: article
+  title: BANKSY unifies cell typing and tissue domain segmentation for scalable spatial omics data analysis
+  authors:
+  - family-names: Singhal
+    given-names: Vipul
+  - family-names: Chou
+    given-names: Nigel
+  - family-names: Lee
+    given-names: Joseph
+  - family-names: Yue
+    given-names: Yifei
+  - family-names: Liu
+    given-names: Jinyue
+  - family-names: Chock
+    given-names: Wan Kee
+  - family-names: Lin
+    given-names: Li
+  - family-names: Chang
+    given-names: Yun-Ching
+  - family-names: Teo
+    given-names: Erica Mei Ling
+  - family-names: Aow
+    given-names: Jonathan
+  - family-names: Lee
+    given-names: Hwee Kuan
+  - family-names: Chen
+    given-names: Kok Hao
+  - family-names: Prabhakar
+    given-names: Shyam
+  year: 2024
+  journal: Nature Genetics
+  volume: 56
+  issue: '3'
+  start: '431'
+  end: '441'
+  doi: 10.1038/s41588-024-01664-3
+  identifiers:
+  - type: other
+    value: pmid:38413725
+    description: PubMed ID
 references:
 - type: article
   title: 'BANKSY unifies cell typing and tissue domain segmentation for scalable spatial omics data analysis'
